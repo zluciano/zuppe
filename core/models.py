@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.postgres.fields import ArrayField
 
 class ActivityLog(models.Model):
     type = models.CharField(max_length=64)
@@ -29,3 +30,29 @@ class Todo(models.Model):
             'description': self.description,
             'done': self.done,
         }
+
+class Material(models.Model):
+    name = models.CharField(max_length=256)
+    image = models.TextField
+
+class Ingredient(models.Model):
+    material = models.ForeignKey(Material)
+    type = models.CharField(max_length=20)
+
+class Recipe(models.Model):
+    author = models.ForeignKey(User)
+    name = models.CharField(max_length=256)
+    description = models.TextField
+    tutorial = models.TextField
+    ingredients = models.ManyToManyField(Ingredient)
+    image = models.TextField
+
+class SavedRecipes(models.Model):
+    owner = models.ForeignKey(User)
+    recipe = models.ForeignKey(Recipe)
+
+class Meal(models.Model):
+    owner = models.ForeignKey(User)
+    day = models.DateTimeField
+    time = models.TextField
+    recipe = models.ForeignKey(Recipe)

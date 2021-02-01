@@ -10,3 +10,12 @@ def user_jon():
         password='snow',
     )
     return ze
+
+def usuario_chef():
+    person = User.objects.create_user(
+        username='jacquin',
+        first_name='Jacquin',
+        last_name='French',
+        email='email@franca.com',
+        password='tompero'
+    )

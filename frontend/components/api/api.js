@@ -19,6 +19,9 @@ const api = {
     list_todos(){
         return get('/api/list_todos');
     }
+    list_meals(username, day){
+        return get('/api/meals', {username: username, day: day})
+    }
 }
 export default api;
 
