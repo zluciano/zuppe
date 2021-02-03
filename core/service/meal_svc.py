@@ -5,7 +5,7 @@ from datetime import timedelta, datetime
 
 def list_meals(user, day):
     meals_lists = []
-    week = list_week_by_day(day)
+    week = list_week_by_day(datetime.strptime(day[:19], '%Y-%m-%dT%H:%M:%S'))
     for weekday in week:
         end = weekday.replace(hour=23, minute=59, second=59)
         start = weekday.replace(hour=0, minute=0, second=1)
@@ -21,7 +21,6 @@ def assign_meal(recipe, day, time):
         meal.save()
 
 def list_week_by_day(day):
-    day = datetime.fromtimestamp(float(day)/1000)
     week = [day]
     for i in range(6):
         day += timedelta(days=1)
