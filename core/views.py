@@ -79,8 +79,8 @@ def assign_meal(request):
 
 @csrf_exempt
 def new_recipe(request):
-    recipe = json.loads(request.POST['recipe'])
-    ingredients = json.loads(request.POST['ingredients'])
+    recipe = request.POST['recipe']
+    ingredients = request.POST['ingredients']
     print(recipe)
     print(ingredients)
     newRecipe = recipe_svc.new_recipe(request.user, recipe, ingredients)
