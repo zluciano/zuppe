@@ -81,6 +81,8 @@ def assign_meal(request):
 def new_recipe(request):
     recipe = request.POST['recipe']
     ingredients = request.POST['ingredients']
+    print(recipe)
+    print(ingredients)
     newRecipe = recipe_svc.new_recipe(request.user, recipe, ingredients)
     return JsonResponse(newRecipe)
 
