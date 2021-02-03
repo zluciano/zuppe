@@ -33,7 +33,7 @@ export default {
                 value_ingredients: this.material_list,
                 action: 'Salvar',
                 actionFunc: (recipe, ingredients) => {
-                    return AppApi.new_recipe(recipe, ingredients).then(result => {
+                    return AppApi.new_recipe(JSON.stringify(recipe), JSON.stringify(ingredients)).then(result => {
                         console.log(result)
                     })
                 }
