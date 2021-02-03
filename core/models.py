@@ -36,11 +36,13 @@ class Material(models.Model):
         return 'Material: ' + self.name
     name = models.CharField(max_length=256)
     image = models.TextField(max_length=1000)
+    type = models.CharField(max_length=20)
 
     def to_dict_json(self):
         return { 
                 'name': self.name,
-                'image': self.image
+                'image': self.image,
+                'type': self.type
             }
 
 class Ingredient(models.Model):
@@ -48,12 +50,11 @@ class Ingredient(models.Model):
         return 'Ingredient: ' + str(self.quantity) + ' ' + self.material.name
     material = models.ForeignKey(Material)
     quantity = models.IntegerField(max_length=1000)
-    type = models.CharField(max_length=20)
     def to_dict_json(self):
         return {
             'material': self.material.name,
             'quantity': self.quantity,
-            'type': self.type
+            'type': self.material.type
         }
 
 class Recipe(models.Model):
