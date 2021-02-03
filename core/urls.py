@@ -12,5 +12,8 @@ urlpatterns = [
 
     url(r'^api/list_meals$', views.list_meals),
     url(r'^api/list_recipes$', views.list_recipes),
+    url(r'^api/list_my_recipes$', views.list_my_recipes),
     url(r'^api/assign_meal$', views.assign_meal),
+    url(r'^api/new_recipe$', views.new_recipe),
+    url(r'^api/list_materials$', views.list_materials),
 ]

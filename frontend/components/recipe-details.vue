@@ -5,8 +5,12 @@
             <h1>Detalhes de {{ meal.recipe.name }}</h1>
         </v-toolbar>
         <div>
-            <h2>Ingredientes</h2>
-            <p v-bind:key="meal.id" v-for="ingredient in meal.recipe.ingredients"> - {{ ingredient.name }}</p>
+            <h2 class="paragraph-init">Ingredientes</h2>
+            <ul>
+                <li v-bind:key="ingredient.id" v-for="ingredient in meal.recipe.ingredients">{{ ingredient.material }} ({{ingredient.quantity}} {{ingredient.type}})</li>
+            </ul>
+            <h2 class="paragraph-init">Modo de Preparo</h2>
+            <p class="paragraph-init">{{meal.recipe.tutorial}}</p>
         </div>
     </v-card>
   </v-dialog>

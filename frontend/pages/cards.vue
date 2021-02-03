@@ -12,10 +12,15 @@ export default {
     home: home,
   },
   asyncData (context) {
-      return AppApi.list_meals(context.query.day).then(result => {
+      var date = Date.parse(context.query.day)
+      return Promise.all([
+          AppApi.list_meals(date),
+          AppApi.list_recipes()
+      ]).then(results => {
         return {
-            card_info: result.data.data,
-            date: Date.parse(context.query.day)
+            card_info: results[0].data.meals,
+            date: date,
+            recipe_list: results[1].data.recipes
         }
     })
   },

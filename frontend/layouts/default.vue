@@ -66,5 +66,9 @@
   cursor: pointer;
 }
 
+.paragraph-init{
+  margin-left: 20px;
+}
+
 
 </style>

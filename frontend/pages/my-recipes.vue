@@ -14,7 +14,7 @@ export default {
   asyncData () {
       return AppApi.list_my_recipes().then(result => {
         return {
-            recipe_list: result.data.my_recipes
+            recipe_list: result.data.recipes
         }
     })
   },

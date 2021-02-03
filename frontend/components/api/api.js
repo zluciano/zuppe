@@ -18,9 +18,21 @@ const api = {
     },
     list_todos(){
         return get('/api/list_todos');
-    }
-    list_meals(username, day){
-        return get('/api/meals', {username: username, day: day})
+    },
+    list_meals(day){
+        return get('/api/list_meals', {day: day});
+    },
+    list_recipes(){
+        return get('/api/list_recipes');
+    },
+    list_my_recipes(){
+        return get('/api/list_my_recipes');
+    },
+    new_recipe(recipe, ingredients){
+        return post('/api/new_recipe', {recipe: recipe, ingredients: ingredients});
+    },
+    list_materials(){
+        return get('/api/list_materials');
     }
 }
 export default api;

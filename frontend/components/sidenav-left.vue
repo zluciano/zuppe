@@ -25,7 +25,7 @@
           <v-list-tile-title>Lista de compras</v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
-      <v-list-tile :to="{ name: 'my-recipes' }">
+      <v-list-tile href="/my-recipes">
         <v-list-tile-action>
           <v-icon>mdi-blender</v-icon>
         </v-list-tile-action>
@@ -33,7 +33,7 @@
           <v-list-tile-title>Suas receitas</v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
-      <v-list-tile :to="{ name: 'all-recipes' }">
+      <v-list-tile href="/all-recipes">
         <v-list-tile-action>
           <v-icon>mdi-map-search</v-icon>
         </v-list-tile-action>

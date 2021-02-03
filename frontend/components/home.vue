@@ -1,5 +1,5 @@
 <template>
-  <dayCards :card_info="card_info" :date="date"></dayCards>
+  <dayCards :card_info="card_info" :date="date" :recipe_list="recipe_list"></dayCards>
 </template>
 
 <script>
@@ -10,7 +10,7 @@ export default {
   components: {
     dayCards: dayCards,
   },
-  props: ["card_info", "date"],
+  props: ["card_info", "date", "recipe_list"],
   data () {
     return {}
   }

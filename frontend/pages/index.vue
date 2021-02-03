@@ -1,5 +1,5 @@
 <template>
-  <home :card_info="card_info" :date="date"></home>
+  <home :card_info="card_info" :date="date" :recipe_list="recipe_list"></home>
 </template>
 
 <script>
@@ -12,10 +12,14 @@ export default {
     home: home,
   },
   asyncData () {
-      return AppApi.list_meals().then(result => {
+      var date = new Date()
+      return Promise.all([
+          AppApi.list_recipes()
+      ]).then(results => {
         return {
-            card_info: result.data.data,
-            date: new Date()
+            card_info: [[],[],[],[],[],[],[]],
+            date: date,
+            recipe_list: results[0].data.recipes
         }
     })
   },

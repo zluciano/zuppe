@@ -2,7 +2,7 @@
   <v-container>
     <v-layout row class="d-flex justify-space-around mb-6">
       <v-flex v-for="weekday in days">
-        <meals :meal_list="weekday.meal_list" :weekday="weekday.name" :day="weekday.day" style="background:#26c6da"></meals>
+        <meals :recipe_list="recipe_list" :meal_list="weekday.meal_list" :weekday="weekday.name" :day="weekday.day" style="background:#26c6da"></meals>
       </v-flex>
     </v-layout>
     <div class="text-xs-center">
@@ -29,7 +29,7 @@ export default {
   components: {
     meals: meals,
   },
-  props: ["card_info", "date"],
+  props: ["card_info", "date", "recipe_list"],
   methods: {
       generateList(){
         var list = {}
@@ -54,28 +54,97 @@ export default {
     }
   },
   data () {
+    var pattern = [
+        {
+            'time': "Café da manhã",
+            'owner': {},
+            'recipe': {}
+        },
+        {
+            'time': "Almoço",
+            'owner': {},
+            'recipe': {}
+        },
+        {
+            'time': "Lanche",
+            'owner': {},
+            'recipe': {}
+        },
+        {
+            'time': "Jantar",
+            'owner': {},
+            'recipe': {}
+        }
+    ]
+    var meal_lists = [this.card_info ? this.card_info[0] : []]
     var hoje = new Date(this.date);
-    console.log(this.date)
+    console.log('Date: ', this.date)
+    console.log(meal_lists)
     hoje.setDate(hoje.getDate() + 1 - (hoje.getDay()==0 ? 7 : hoje.getDay()))
     console.log(hoje)
     var days = [hoje.toLocaleDateString()]
     for (var i=1; i<7; i++){
+        var meal_list = this.card_info ? this.card_info[i] : []
+        meal_lists.push(meal_list)
         hoje = new Date(hoje)
         hoje.setDate(hoje.getDate() + 1)
         days.push(hoje.toLocaleDateString())
     }
-    var nextWeek = (new Date(hoje.setDate(hoje.getDate() + 1))).toLocaleString()
-    var previousWeek = (new Date(hoje.setDate(hoje.getDate() - 14))).toLocaleString()
+    var nextWeek = (new Date(hoje.setDate(hoje.getDate() + 1))).toISOString()
+    console.log('next week: ', nextWeek)
+    var previousWeek = (new Date(hoje.setDate(hoje.getDate() - 14))).toISOString()
+
+    for (var idx in meal_lists){
+        var list = []
+        Object.assign(list, meal_lists[idx])
+        if (list.length == 0){
+            Object.assign(list, pattern)
+        }
+        else{
+            if (list[list.length-1]['time'] != pattern[pattern.length-1]['time']){
+                var item = {}
+                Object.assign(item, pattern[pattern.length-1])
+                list.push(item)
+            }
+            for (var index in pattern){
+                if (list[index]['time'] != pattern[index]['time']){
+                    var item = {}
+                    Object.assign(item, pattern[index])
+                    list.splice(index, 0, item)
+                }
+            }
+        }
+        Object.assign(meal_lists[idx], list)
+    }
+    for (var idx in meal_lists){
+        if (!meal_lists[idx][0]['day']){
+            meal_lists[idx][0]['day']=new Date(days[idx])
+            meal_lists[idx][0]['day'].setHours(9, 0, 0)
+        }
+        else if (!meal_lists[idx][1]['day']){
+            meal_lists[idx][1]['day']=new Date(days[idx])
+            meal_lists[idx][1]['day'].setHours(12, 0, 0)
+        }
+        else if (!meal_lists[idx][2]['day']){
+            meal_lists[idx][2]['day']=new Date(days[idx])
+            meal_lists[idx][2]['day'].setHours(15, 0, 0)
+        }
+        else if (!meal_lists[idx][3]['day']){
+            meal_lists[idx][3]['day']=new Date(days[idx])
+            meal_lists[idx][3]['day'].setHours(18, 0, 0)
+        }
+    }
+    console.log(meal_lists)
 
     return {
         days: [
-            {name: "Segunda-Feira", day: this.card_info[0].date, meal_list: this.card_info[0].meal_list},
-            {name: "Terça-Feira", day: this.card_info[1].date, meal_list: this.card_info[1].meal_list},
-            {name: "Quarta-Feira", day: this.card_info[2].date, meal_list: this.card_info[2].meal_list},
-            {name: "Quinta-Feira", day: this.card_info[3].date, meal_list: this.card_info[3].meal_list},
-            {name: "Sexta-Feira", day: this.card_info[4].date, meal_list: this.card_info[4].meal_list},
-            {name: "Sábado", day: this.card_info[5].date, meal_list: this.card_info[5].meal_list},
-            {name: "Domingo", day: this.card_info[6].date, meal_list: this.card_info[6].meal_list}
+            {name: "Segunda-Feira", day: days[0], meal_list: meal_lists[0]},
+            {name: "Terça-Feira", day: days[1], meal_list: meal_lists[1]},
+            {name: "Quarta-Feira", day: days[2], meal_list: meal_lists[2]},
+            {name: "Quinta-Feira", day: days[3], meal_list: meal_lists[3]},
+            {name: "Sexta-Feira", day: days[4], meal_list: meal_lists[4]},
+            {name: "Sábado", day: days[5], meal_list: meal_lists[5]},
+            {name: "Domingo", day: days[6], meal_list: meal_lists[6]}
         ],
         nextWeek: nextWeek,
         previousWeek: previousWeek

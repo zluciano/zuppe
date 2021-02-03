@@ -4,7 +4,7 @@ from django.http.response import HttpResponse, JsonResponse
 from django.contrib import auth
 from commons.django_model_utils import get_or_none
 from commons.django_views_utils import ajax_login_required
-from core.service import log_svc, todo_svc, meal_svc, recipe_svc
+from core.service import log_svc, todo_svc, meal_svc, recipe_svc, material_svc
 from django.views.decorators.csrf import csrf_exempt
 
 
@@ -60,7 +60,6 @@ def list_meals(request):
     meals = meal_svc.list_meals(request.user, request.GET['day'])
     return JsonResponse({'meals': meals})
 
-
 def list_recipes(request):
     recipes = recipe_svc.list_recipes()
     return JsonResponse({'recipes': recipes})
@@ -77,6 +76,21 @@ def assign_meal(request):
     time = request.POST['time']
     data = meal_svc.assign_meal(recipe, day, time)
     return JsonResponse({data: data})
+
+@csrf_exempt
+def new_recipe(request):
+    print("entered views")
+    data = json.loads(request.body)
+    recipe = data['recipe']
+    print(recipe)
+    ingredients = data['ingredients']
+    print(ingredients)
+    newRecipe = recipe_svc.new_recipe(request.user, recipe, ingredients)
+    return JsonResponse(newRecipe)
+
+def list_materials(request):
+    materials = material_svc.list_materials()
+    return JsonResponse({'materials': materials})
 
 def _user2dict(user):
     d = {
