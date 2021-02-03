@@ -12,9 +12,9 @@ export default {
     home: home,
   },
   asyncData (context) {
-      var date = Date.parse(context.query.day).toISOString()
+      var date = new Date(context.query.day)
       return Promise.all([
-          AppApi.list_meals(date),
+          AppApi.list_meals(date.toISOString()),
           AppApi.list_recipes()
       ]).then(results => {
         return {
