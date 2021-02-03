@@ -13,7 +13,7 @@ class MealAdmin(admin.ModelAdmin):
     list_display = ('owner', 'day', 'recipe', 'time')
 
 class MaterialAdmin(admin.ModelAdmin):
-    list_display = ('name', 'image')
+    list_display = ('name', 'type', 'image')
 
 class RecipeAdmin(admin.ModelAdmin):
     list_display = ('author', 'name', 'description', 'tutorial', 'image')
@@ -22,7 +22,7 @@ class SavedRecipesAdmin(admin.ModelAdmin):
     list_display = ('owner', 'recipe')
 
 class IngredientAdmin(admin.ModelAdmin):
-    list_display = ('material', 'quantity', 'type')
+    list_display = ('material', 'quantity')
 
 
 admin.site.register(ActivityLog, ActivityLogAdmin)
