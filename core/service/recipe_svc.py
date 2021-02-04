@@ -7,7 +7,7 @@ def list_my_recipes(user):
     return [recipe.to_dict_json() for recipe in SavedRecipes.objects.filter(owner=user)]
 
 def new_recipe(user, recipe, ingredients):
-    print("ATENÇÃO")
+    print("ATENO")
     print(ingredient)
     print(ingredient['quantity'])
     entry = Recipe.objects.create(
