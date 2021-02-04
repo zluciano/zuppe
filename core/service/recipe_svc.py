@@ -7,7 +7,9 @@ def list_my_recipes(user):
     return [recipe.to_dict_json() for recipe in SavedRecipes.objects.filter(owner=user)]
 
 def new_recipe(user, recipe, ingredients):
-    print(user)
+    print("ATENÇÃO")
+    print(ingredient)
+    print(ingredient['quantity'])
     entry = Recipe.objects.create(
         author=user,
         name=recipe['name'],
@@ -16,8 +18,10 @@ def new_recipe(user, recipe, ingredients):
         image=recipe['image']
     )
     for ingredient in ingredients:
-        material = Material.objects.get(name=ingredient['material'])
-        instance = Ingredient.objects.get_or_create(material=material, quantity=int(ingredient['quantity']))
+        material = Material(name=ingredient['material'], type=ingredient['type'], image=ingredient['image'])
+        material.save()
+        instance = Ingredient(material=material, quantity=int(ingredient['quantity']))
+        instance.save()
         entry.ingredients.add(instance)
     entry.save()
     return entry.to_dict_json()
