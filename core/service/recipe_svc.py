@@ -17,8 +17,8 @@ def new_recipe(user, recipe, ingredients):
     for ingredient in ingredients:
         print("ATENO")
         print(ingredient)
-        print(ingredient['quantity'])
-        material = Material(name=ingredient['material'], type=ingredient['type'], image=ingredient['image'])
+        print(type(ingredient['quantity']))
+        material = Material(name=ingredient['material'], type=ingredient['type'], image='a')
         material.save()
         instance = Ingredient(material=material, quantity=int(ingredient['quantity']))
         instance.save()
