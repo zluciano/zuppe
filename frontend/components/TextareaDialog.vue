@@ -16,7 +16,7 @@
           <v-container fluid>
             <v-layout>
                 <v-flex class="pa-2">
-                    <v-select :label="label_ingredient" v-model="value_ingredient" :items="value_ingredients" :item-text="'name'"></v-select>
+                    <v-autocomplete :label="label_ingredient" v-model="value_ingredient" :options="value_ingredients" :item-text="'name'"></v-autocomplete>
                 </v-flex>
                 <v-flex class="pa-2">
                     <v-text-field :label="label_quantity" v-model="value_quantity" auto-grow @keyup.esc="close()"/>
@@ -42,7 +42,12 @@
 </template>
 
 <script>
-import AppApi from '~apijs'
+
+import vSelect from 'vue-select';
+import 'vue-select/dist/vue-select.css';
+
+Vue.component('v-select', vSelect)
+
 export default {
   data () {
     return {
@@ -64,6 +69,7 @@ export default {
       action: 'OK',
       actionFunc: null,
       loading: false,
+      searchInput: '',
     };
   },
   methods: {

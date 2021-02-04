@@ -15,13 +15,16 @@ def new_recipe(user, recipe, ingredients):
         image=recipe['image']
     )
     for ingredient in ingredients:
-        print("ATENO")
-        print(ingredient)
-        print(type(ingredient['quantity']))
-        material = Material(name=ingredient['material'], type=ingredient['type'], image='a')
+        material = Material(name=ingredient['material'], type=ingredient['type'], image=ingredient['image'])
         material.save()
         instance = Ingredient(material=material, quantity=int(ingredient['quantity']))
         instance.save()
         entry.ingredients.add(instance)
+        my_entry.ingredients.add(instance)
     entry.save()
-    return entry.to_dict_json()
+    my_entry = SavedRecipes.objects.create(
+        owner=user,
+        recipe=entry
+    )
+    my_entry.save()
+    return {all_recipes: entry.to_dict_json(), my_recipes: my_entry.to_dict_json()}
